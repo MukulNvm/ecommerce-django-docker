@@ -1,0 +1,46 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <h3>Welcome <span class="text-capitalize text-warning">{{request.user}}</span> </h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="{% url 'profile' %}" class="btn  {{active}}">Profile</a></li>
+    <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
+   </ul>
+  </div>
+  <div class="col-sm-8 offset-sm-1">
+
+   <form action="" method="post">
+    {% csrf_token %}
+    {% if messages %}
+    {% for message in messages %}
+       <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+    {% endfor %}
+ {% endif %}
+
+
+    {% for fm in form %}
+     <div class="form-group">
+      {{fm.label_tag}} {{fm}}
+      <small class="text-danger">{{fm.errors | striptags}}</small>
+   </div>
+    {% endfor %}
+
+    <input type="submit" class="btn btn-primary mt-4" value="submit">
+    <br>
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <p class="aler alert-danger my-3 p-3">{{error}}</p>
+    {% endfor %}
+    <input type="submit" class="btn btn-primary mt-4" value="submit">
+    {% endif %}
+
+   </form>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

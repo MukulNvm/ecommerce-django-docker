@@ -1,0 +1,42 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Laptops{% endblock title %}
+{% block main-content %}
+<div class="container-fluid my-3">
+  <div class="row">
+    <!-- Sidebar for categories -->
+    <div class="col-lg-2 col-md-3 col-sm-4 col-12 mb-3">
+      <div class="list-group">
+        <a href="{% url 'laptop' %}" class="list-group-item list-group-item-action" aria-current='true'>
+          All Laptops
+        </a> 
+        <a href="{% url 'laptopdata' 'HP' %}" class="list-group-item list-group-item-action">HP</a>
+        <a href="{% url 'laptopdata' 'Dell' %}" class="list-group-item list-group-item-action">Dell</a>
+        <a href="{% url 'laptopdata' 'Lenovo' %}" class="list-group-item list-group-item-action">Lenovo</a>
+        <a href="{% url 'laptopdata' 'Apple' %}" class="list-group-item list-group-item-action">Apple</a>
+      </div>
+    </div>
+
+    <!-- Main content for products -->
+    <div class="col-lg-10 col-md-9 col-sm-8 col-12">
+      <div class="row">
+        {% for product in laptops %}
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-4 d-flex justify-content-center">
+            <a href="{% url 'product-detail' product.id %}" class="btn w-100">
+              <div class="card shadow-sm">
+                <img src="{{ product.product_image.url }}" alt="{{ product.title }}" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                  <h6 class="fw-bold">{{ product.title }}</h6>
+                  <p class="fw-bold mb-1">Rs. {{ product.discounted_price }}
+                    <small class="fw-light text-decoration-line-through">{{ product.selling_price }}</small>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div> 
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}

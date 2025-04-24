@@ -1,0 +1,28 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Address{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+     <h2 class="text-primary">Search Results for {{ query }}</h2>
+     <hr>
+     {% if products %}
+         <div class="row">
+             {% for product in products %}
+                 <div class="col-md-4 mb-3">
+                     <div class="card">
+                         <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.title }}">
+                         <div class="card-body">
+                             <h5 class="card-title">{{ product.title }}</h5>
+                             <p class="card-text">Brand: {{ product.brand }}</p>
+                             <p class="card-text"><strong>₹{{ product.discounted_price }}</strong> <del>₹{{ product.selling_price }}</del></p>
+                             <a href="{% url 'product-detail' product.id %}" class="btn btn-primary">View Product</a>
+                         </div>
+                     </div>
+                 </div>
+             {% endfor %}
+         </div>
+     {% else %}
+         <p class="text-muted">No products found for "{{ query }}".</p>
+     {% endif %}
+</div>
+{% endblock main-content %}
